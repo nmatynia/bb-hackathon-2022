@@ -40,7 +40,13 @@ const Map = () =>{
         zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        options={{streetViewControl: false}}
+        options={{
+          streetViewControl: false,
+          fullscreenControl: false,
+          mapTypeControlOptions:{
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+          },
+        }}
         
       >
         { <DrawingManager/> }
