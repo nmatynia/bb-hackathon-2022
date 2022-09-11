@@ -2,6 +2,8 @@ import React from 'react'
 import { DrawingManager, GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { FiMapPin } from 'react-icons/fi'
 import { apiKey } from "../../../../apikey";
+import markerIcon from '../../../../icons/map-pin.svg'
+
 
 const containerStyle = {
   width: '100vw',
@@ -41,7 +43,8 @@ const Map = () =>{
 
     marker = new google.maps.Marker({
       position: position,
-      map: map
+      map: map,
+      icon: markerIcon
     });
     map.panTo(position);
   }
