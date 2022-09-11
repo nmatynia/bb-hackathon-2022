@@ -16,10 +16,11 @@ export const MainPage = () => {
 
   console.log({pos,areaType,quantity,yieldValue})
 
+  const handleChangeSelectAreaType = (e: React.ChangeEvent<HTMLSelectElement>) => setAreaType(e.target.value);
   const handleChangeAreaType = (type: string) => setAreaType(type)
   const handleChangeQuantity = (e: any) => setQuantity(e)
   const handleChangeYield = (e: any) => setYieldValue(e)
-  // const handleChangePosition = (obj:{lat:number, lng:number}) => setPos(obj)
+  const handleChangePosition = (obj:{lat:number, lng:number}) => setPos(obj)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
     const finalRefMain = React.useRef(null)
@@ -32,6 +33,11 @@ export const MainPage = () => {
        finalRef={finalRefMain}
         isOpen={isOpen}
         onClose={onClose}
+        pos={pos}
+        handleChangeSelectAreaType={handleChangeSelectAreaType}
+        handleChangeQuantity={handleChangeQuantity}
+        handleChangeYield={handleChangeYield}
+        handleChangePosition={handleChangePosition}
         />
       <LeftInterface
         handleChangeAreaType={handleChangeAreaType}
