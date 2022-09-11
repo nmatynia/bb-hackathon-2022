@@ -16,8 +16,8 @@ export const LoginPage = () => {
     const [login, setLogin] = useState('');
     const [password,setPassword] = useState('');
 
-    const handleLoginChange = (e:any) => setLogin(e.target.value);
-    const handlePasswordChange = (e:any) => setPassword(e.target.value);
+    const handleLoginChange = (e:React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value);
+    const handlePasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     //TODO: Error handeling
     const isError = false;
     return (
