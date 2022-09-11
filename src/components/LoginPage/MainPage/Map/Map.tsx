@@ -21,7 +21,7 @@ const Map = () =>{
     libraries: ['drawing'],
   })
 
-  const [map, setMap] = React.useState(null)
+  const [map, setMap] = React.useState<google.maps.Map | null>(null)
 
   const onLoad = React.useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
@@ -32,6 +32,18 @@ const Map = () =>{
   const onUnmount = React.useCallback(function callback(map: any) {
     setMap(null)
   }, [])
+
+  const placeMarker = (position: google.maps.LatLng, map: google.maps.Map) => {
+    const marker = new google.maps.Marker({
+        position: position,
+        map: map
+    });
+    map.panTo(position);
+  }
+
+  map?.addListener('click', (e: any) => {
+    placeMarker(e.latLng, map);
+  });
 
   return isLoaded ? (
       <GoogleMap
@@ -44,7 +56,7 @@ const Map = () =>{
           streetViewControl: false,
           fullscreenControl: false,
           mapTypeControlOptions:{
-            position: google.maps.ControlPosition.LEFT_BOTTOM
+            position: google.maps.ControlPosition.BOTTOM_CENTER 
           },
         }}
         
