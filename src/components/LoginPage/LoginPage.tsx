@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 
 import { useState } from 'react'
-
+import axios from 'axios'
 export const LoginPage = () => {
 
     const [login, setLogin] = useState('');
@@ -20,6 +20,13 @@ export const LoginPage = () => {
     const handlePasswordChange = (e:any) => setPassword(e.target.value);
     //TODO: Error handeling
     const isError = false;
+    const fetchLogin = () =>{
+        const results = axios.post('http://10.10.60.98:8080/auth/loginUser',{login,password},{withCredentials: true})
+        console.log(results)
+    } 
+    React.useEffect(()=>{
+        fetchLogin()
+    },[])
     return (
         <div className='bg-windmills bg-cover bg-no-repeat'>
             <div className='flex flex-col items-center bg-gradient-to-b from-blue-900 to-transparent overflow-hidden h-[100vh]'>
