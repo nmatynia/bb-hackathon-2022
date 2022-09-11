@@ -1,5 +1,9 @@
+ /* eslint-disable */ 
+
+
 import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Box, Input, FormControl, FormLabel, Divider, Select} from "@chakra-ui/react"
 import React from "react"
+
 
 interface IProps {
   finalRef: any
@@ -10,11 +14,33 @@ interface IProps {
   handleChangeQuantity: (e: any) => void
   handleChangeYield: (e: any) => void
   handleChangePosition: (e: any) => void
-}
-export const AdminPageModal:React.FC<IProps> = ({finalRef, isOpen, onClose, handleChangePosition, handleChangeSelectAreaType, handleChangeQuantity, handleChangeYield, pos}) => { 
 
-    const valuesArray = [12,12,12,12,12];
+  areaType: string;
+  quantity: number;
+  yieldValue: number;
+}
+export const AdminPageModal:React.FC<IProps> = ({finalRef, isOpen, onClose, handleChangePosition, handleChangeSelectAreaType, handleChangeQuantity, handleChangeYield, pos, areaType, quantity, yieldValue}) => { 
+
+    const valuesArray: any = [{lat: -52.123, lng: 21.372, type: "Solar Panel", quantity: 100, yield: '30%'},
+                              {lat: -122.123, lng: 5.372, type: "Wind Mill", quantity: 140, yield: '25%'},
+                              {lat: -22.123, lng: 12.372, type: "Solar Panel", quantity: 40, yield: '30%'}];
     const typesArray = ['Latitude', 'Longitude', 'Type', 'Quantity', 'Yield Guarantee'];
+
+
+    const verifyInputAndSendData = (val: any) => {
+
+      console.log(yieldValue);
+      sendData();
+
+    }
+    function checkValidInput() {
+      // if (pos?.lat <= 180.0 && pos?.lat >= -180.0 && pos?.lng <= 90.0  && pos?.lng >= -90.0 && areaType && quantity && yieldValue) {
+      //   return true;
+      // }
+      // return false;
+      console.log("Sprawdzanie diała")
+    }
+    
 
 
     const sendData = () => {
@@ -26,7 +52,7 @@ export const AdminPageModal:React.FC<IProps> = ({finalRef, isOpen, onClose, hand
         <Box ref={finalRef} tabIndex={-1} aria-label='Focus moved to this box'>
 
         </Box>
-        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} size='5xl'>
+        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} size='6xl'>
           <ModalOverlay 
             bg='none'
             backdropFilter='auto'
@@ -36,38 +62,48 @@ export const AdminPageModal:React.FC<IProps> = ({finalRef, isOpen, onClose, hand
           <ModalContent w='100rem'>
             <ModalHeader>Admin Page</ModalHeader>
             <ModalCloseButton />
-            <ModalBody  className='flex justify-center'>
-             <div className='flex items-center' style={{width: '1000px'}}>
-                <FormControl>
-                    <Input onChange={(e) => handleChangePosition({...pos, lat:e.target.value})} type='number' className='ml-8 mr-2' style={{width: '148px'}} placeholder="Latitude" />
-                    <Input onChange={(e) => handleChangePosition({ ...pos, lng:e.target.value})} type='number' className='ml-2 mr-2' style={{width: '148px'}} placeholder="Longitude" />
-
-                    <Select onChange={handleChangeSelectAreaType} className='ml-2 mr-2' style={{width: '148px'}} placeholder="Type">
+            <ModalBody>
+             <div style={{width: '1000px'}}>
+                <FormControl className='ml-6 grid grid-cols-6 gap-4'>
+                    <Input onChange={(e) => handleChangePosition({...pos, lat:e.target.value})} type='number'  style={{width: '148px'}} placeholder="Latitude" />
+                    <Input onChange={(e) => handleChangePosition({ ...pos, lng:e.target.value})} type='number' style={{width: '148px'}} placeholder="Longitude" />
+                  
+                  {/* <div style={{width: '148px', marginRight: '0px'}}> */}
+                    <Select onChange={handleChangeSelectAreaType} width={148} placeholder="Type">
                       <option value='solar_panel'>Solar Panel</option>
                       <option value='windmill'>Windmill</option>
                     </Select>
+                  {/* </div> */}
 
-                    <Input onChange={handleChangeQuantity} type='number' className='ml-2 mr-2' style={{width: '148px'}} placeholder="Quantity" />
-                    <Input onChange={handleChangeYield} type='number' className='ml-2 mr-8' style={{width: '148px'}} placeholder="Yield Guarantee" />
-                    <Button onClick={sendData} bgColor={'teal.500'} color={'white'} style={{margin: "0 0 0.35rem 0" }}>Add</Button>
-                    <div className='bg-zinc-400 my-4 ml-6 opacity-40' style={{width: '90%', height: '0.15rem'}}></div>
+                    <Input onChange={handleChangeQuantity} type='number'  style={{width: '148px'}} placeholder="Quantity" />
+                    <Input onChange={handleChangeYield} type='text' style={{width: '148px'}} placeholder="Yield Guarantee" />
+                    <Button onClick={verifyInputAndSendData} bgColor={'teal.500'} color={'white'} style={{margin: "0 2rem 0.35rem 0" }}>Add</Button>
+                    
 
-                    <div className='flex'>
+                    
+                    </FormControl>
+                    <div className='bg-zinc-400 my-4 ml-6 opacity-40' style={{width: '95%', height: '0.15rem'}}></div>
+                    <div className='ml-8 grid grid-cols-6 gap-8'>
                       {typesArray.map((type, index) => (
-                        <FormLabel className='ml-24 mr-2 first:ml-8' key={type}>{type}</FormLabel>
+                        <FormLabel key={type}>{type}</FormLabel>
                       ))}
                     </div>
-                    
-                    <div>
-                {valuesArray.map((value, index) => (
-                    
-                    <Input type='number' className='ml-2 mr-2 first:ml-8' style={{width: '148px', pointerEvents: 'none'}} placeholder="Latitude" readOnly contentEditable='false' key={index}/>
-                  
+                   
+                    <div className='ml-6 grid grid-cols-6 gap-9'></div>
+               
+                {valuesArray.map((value: any, index: any) => (
+                  <div>
+                   
+                    <Input className='ml-2 mr-2 first:ml-8' style={{width: '148px', pointerEvents: 'none'}}  readOnly contentEditable='false' value={value.lat} key={value.lat}/>
+                    <Input className='ml-2 mr-2 first:ml-8' style={{width: '148px', pointerEvents: 'none'}}  readOnly contentEditable='false' value={value.lng} key={value.lng}/>
+                    <Input className='ml-2 mr-2 first:ml-8' style={{width: '148px', pointerEvents: 'none'}}  readOnly contentEditable='false' value={value.type} key={value.type}/>
+                    <Input className='ml-2 mr-2 first:ml-8' style={{width: '148px', pointerEvents: 'none'}}  readOnly contentEditable='false' value={value.quantity} key={value.quantity}/>
+                    <Input className='ml-2 mr-2 first:ml-8' style={{width: '148px', pointerEvents: 'none'}}  readOnly contentEditable='false' value={value.yield} key={value.yieldValue}/>
 
-                )
-                    )}
                   </div>
-                </FormControl>
+                ))}
+                  
+                
                 
                 
 
@@ -75,7 +111,7 @@ export const AdminPageModal:React.FC<IProps> = ({finalRef, isOpen, onClose, hand
             </ModalBody>
   
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={onClose}>
+              <Button colorScheme='red' mr={3} onClick={onClose}>
                 Close
               </Button>
             </ModalFooter>

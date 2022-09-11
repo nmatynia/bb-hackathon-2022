@@ -34,6 +34,9 @@ export const MainPage = () => {
         isOpen={isOpen}
         onClose={onClose}
         pos={pos}
+        areaType={areaType}
+        quantity={quantity}
+        yieldValue={yieldValue}
         handleChangeSelectAreaType={handleChangeSelectAreaType}
         handleChangeQuantity={handleChangeQuantity}
         handleChangeYield={handleChangeYield}
