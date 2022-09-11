@@ -1,6 +1,6 @@
 import React from 'react'
 import { DrawingManager, GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-
+import { FiMapPin } from 'react-icons/fi'
 import { apiKey } from "../../../../apikey";
 
 const containerStyle = {
@@ -18,10 +18,10 @@ const Map = () =>{
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
-    libraries: ['drawing'],
   })
 
-  const [map, setMap] = React.useState(null)
+  const [map, setMap] = React.useState<google.maps.Map | null>(null)
+  let marker:google.maps.Marker;
 
   const onLoad = React.useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
@@ -33,6 +33,23 @@ const Map = () =>{
     setMap(null)
   }, [])
 
+  const placeMarker = (position: google.maps.LatLng, map: google.maps.Map) => {
+    if(marker){
+      marker.setPosition(position)
+      return;
+    }
+
+    marker = new google.maps.Marker({
+      position: position,
+      map: map
+    });
+    map.panTo(position);
+  }
+
+  map?.addListener('click', (e: google.maps.MapMouseEvent) => {
+    placeMarker(e.latLng!, map);
+  });
+  
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -44,12 +61,18 @@ const Map = () =>{
           streetViewControl: false,
           fullscreenControl: false,
           mapTypeControlOptions:{
-            position: google.maps.ControlPosition.LEFT_BOTTOM
+            position: google.maps.ControlPosition.BOTTOM_CENTER 
           },
+          styles:[
+            {
+                featureType: "poi",
+                stylers: [
+                  { visibility: "off" }
+                ]   
+              }
+            ]
         }}
-        
       >
-        { <DrawingManager/> }
       </GoogleMap>
   ) : <></>
 }
