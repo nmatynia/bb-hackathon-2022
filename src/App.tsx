@@ -4,7 +4,7 @@ import { LoginPage }  from './components/LoginPage/LoginPage'
 import { MainPage } from './components/LoginPage/MainPage/MainPage';
 
 const App = () => {
-  const loggedIn = true;
+  const loggedIn = false;
 
   return (
     <ChakraProvider>

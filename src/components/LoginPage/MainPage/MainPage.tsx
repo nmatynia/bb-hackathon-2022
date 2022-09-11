@@ -1,7 +1,15 @@
 import React from 'react'
+import Map from './Map/Map'
+import TopInterface  from './TopInterface'
+import LeftInterface from './LeftInterface'
 
 export const MainPage = () => {
   return (
-    <div>MainPage</div>
+    <div>
+      <TopInterface/>
+      <LeftInterface/>
+      <Map/>
+    </div>
+   
   )
 }
