@@ -49,7 +49,7 @@ const Map = () =>{
   map?.addListener('click', (e: google.maps.MapMouseEvent) => {
     placeMarker(e.latLng!, map);
   });
-
+  
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -63,8 +63,15 @@ const Map = () =>{
           mapTypeControlOptions:{
             position: google.maps.ControlPosition.BOTTOM_CENTER 
           },
+          styles:[
+            {
+                featureType: "poi",
+                stylers: [
+                  { visibility: "off" }
+                ]   
+              }
+            ]
         }}
-        
       >
       </GoogleMap>
   ) : <></>
