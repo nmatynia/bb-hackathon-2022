@@ -1,5 +1,8 @@
 import React from 'react'
 
+//TODO retrieve data from backend to display 
+
+
 const LeftInterface = () => {
   return (
     <div className='fixed w-[300px] h-[500px] top-0 mt-[100px] z-10 flex flex-col justify-between mx-16 rounded-lg  bg-gradient-to-b from-white to-neutral-100 shadow-2xl bg-opacity-90'>
