@@ -10,7 +10,8 @@ import {
   MenuOptionGroup,
   MenuDivider,
   Box,
-  Tag
+  Tag,
+  useDisclosure
 } from '@chakra-ui/react'
 
 import { Tooltip } from '@chakra-ui/react'
@@ -21,7 +22,11 @@ import {AiFillPlusCircle} from 'react-icons/ai'
 import { BiSelection } from 'react-icons/bi'
 import {TbShape2} from 'react-icons/tb'
 
-const TopInterface = () => {
+interface IProps {
+  onOpen: () => void
+}
+
+const TopInterface: React.FC<IProps> = ({onOpen}) => {
   {/* @ts-ignore */}
   const CustomCard = React.forwardRef(({ children, ...rest }, ref) => (
     <Box>
@@ -31,6 +36,8 @@ const TopInterface = () => {
       </Tag>
     </Box>
   ))
+
+  
 
   return (
     <div className='fixed w-[90%] top-0 z-10 flex items-center justify-between mx-16 mt-3 rounded-lg h-16 bg-gradient-to-b from-white to-neutral-100 shadow-2xl bg-opacity-90'>
@@ -53,8 +60,9 @@ const TopInterface = () => {
           variant=''
         />
         <MenuList>
-          <MenuItem icon={<HiOutlineTable className='w-5 h-5' />}>
+          <MenuItem onClick={onOpen} icon={<HiOutlineTable className='w-5 h-5' />}>
             Admin Panel
+            
           </MenuItem>
           <MenuItem icon={<FiSettings className='w-5 h-5' />}>
             Settings
@@ -68,5 +76,7 @@ const TopInterface = () => {
     </div>
   )
 }
+
+
 
 export default TopInterface;

@@ -10,9 +10,11 @@ const containerStyle = {
 };
 
 //TODO: Take position of fetched items[0].
+
 const center = {
-  lat: -3.745,
-  lng: -38.523
+ 
+  lat: 52.2167,
+  lng: 21.0333,
 };
 
 interface IProps {
@@ -71,7 +73,7 @@ const Map:React.FC<IProps> = ({setPos}) => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={10}
+      zoom={5}
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={{
