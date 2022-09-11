@@ -16,7 +16,8 @@ const App = () => {
               <LoginPage setLoggedIn={setLoggedIn}/>
             </Route>
             <Route exact path='/'>
-              {!loggedIn ? <Redirect to ="/login"/>:<MainPage/>}
+              {/* !loggedIn here */}
+              {loggedIn ? <Redirect to ="/login"/>:<MainPage/>}
             </Route>
         </Switch>
       </Router>
