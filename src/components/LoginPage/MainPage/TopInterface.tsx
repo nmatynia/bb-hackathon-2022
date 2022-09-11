@@ -49,7 +49,7 @@ const TopInterface = () => {
         <MenuButton
           as={IconButton}
           aria-label='Options'
-          icon={<FaUserCircle className='w-11 h-11 rounded-3xl mr-7'/>}
+          icon={<FaUserCircle className='w-10 h-10 rounded-3xl mr-7'/>}
           variant=''
         />
         <MenuList>
