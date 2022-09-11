@@ -2,9 +2,10 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { LoginPage }  from './components/LoginPage/LoginPage'
 import { MainPage } from './components/LoginPage/MainPage/MainPage';
+import React from 'react'
 
 const App = () => {
-  const loggedIn = false;
+  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
 
   return (
     <ChakraProvider>
@@ -12,10 +13,10 @@ const App = () => {
         <Switch>
         {/* If loggedIn  show LoginPage if not MainPage*/}
             <Route path='/login'>
-              <LoginPage/>
+              <LoginPage setLoggedIn={setLoggedIn}/>
             </Route>
             <Route exact path='/'>
-              {loggedIn ? <Redirect to ="/login"/>:<MainPage/>}
+              {!loggedIn ? <Redirect to ="/login"/>:<MainPage/>}
             </Route>
         </Switch>
       </Router>
