@@ -21,13 +21,18 @@ export const LoginPage:React.FC<IProps> = ({setLoggedIn}) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLoginChange = (e: any) => setUserName(e.target.value);
-    const handlePasswordChange = (e: any) => setPassword(e.target.value);
+    const handleLoginChange = (e:React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
+    const handlePasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     //TODO: Error handeling
     const isError = false;
     const fetchLogin = async ()  => {
-        const results = await axios.post('http://10.10.60.98:8080/auth/loginUser', { userName, password }, { withCredentials: true }).catch(x => x as AxiosResponse)
-        setLoggedIn(results.data.accessToken.length > 0)
+        if(sessionStorage.getItem('logged') === null){
+            const results = await axios.post('http://10.10.60.98:8080/auth/loginUser', { userName, password }, { withCredentials: true }).catch(x => x as AxiosResponse)
+            console.log(results.data.accessToken.length > 0)
+            sessionStorage.setItem('logged',results.data.expiresIn)
+            setLoggedIn(results.data.accessToken.length > 0)
+        }else if((Date.now() - Number(String(sessionStorage.getItem('logged')))) > 300) return;
+        
     }
 
     return (
