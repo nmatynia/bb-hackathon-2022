@@ -32,6 +32,7 @@ const LeftInterface: React.FC<IProps> = ({
 }) => {
 
   const [showTooltip, setShowTooltip] = React.useState(false)
+  
   const estTarget = (energyNeeded: number, energyMade: number, energyPerHour: number) => {
     const estInHours = (energyNeeded - energyMade) / energyPerHour
     const days = Math.floor(estInHours / 24)
@@ -54,6 +55,22 @@ const LeftInterface: React.FC<IProps> = ({
       </>
     ): false
   }
+
+  const energyGatheredColor = (energyNeeded: number, energyMade: number) =>{
+    const goalPrecentage = Math.round(energyMade/energyNeeded * 100);
+    if(goalPrecentage < 50){
+      return 'text-red-300'
+    }
+    else if(goalPrecentage >= 50 && goalPrecentage <75){
+      return 'text-orange-300'
+    }
+    else if(goalPrecentage >= 75 && goalPrecentage <= 99){
+      return 'text-green-300'
+    }else{
+      return 'text-green-700'
+    }
+  }
+
   return (
     <div className='fixed min-w-[300px] max-w-[400px] top-0 mt-[100px] z-10 flex flex-col mx-16 rounded-lg  bg-gradient-to-b from-white to-neutral-100 shadow-2xl bg-opacity-90'>
       <h1 className='font-semibold text-2xl text-neutral-800 m-7 mb-5'>{markerInfo?.address}</h1>
@@ -67,7 +84,7 @@ const LeftInterface: React.FC<IProps> = ({
           </div>
           <Divider />
           <FormLabel className='mt-5 ml-7'>Energy gathered:</FormLabel>
-          <div className='flex font-semibold text-5xl text-neutral-800 mt-5 mb-5 ml-7'>
+          <div className={`flex font-semibold text-5xl ${energyGatheredColor(markerInfo?.energyNeeded, markerInfo.energyMade)} mt-5 mb-5 ml-7`}>
             {markerInfo?.energyMade}
             <div className='ml-1 text-sm'>kWh</div>
           </div>
@@ -78,10 +95,14 @@ const LeftInterface: React.FC<IProps> = ({
             <div className='ml-1 text-sm'>kWh</div>
           </div>
           <Divider />
-          <FormLabel className='mt-5 ml-7'>Estimated target:</FormLabel>
-          <div className='flex font-semibold text-5xl text-neutral-800 mt-5 mb-5 ml-7'>
-            {estTarget(markerInfo.energyNeeded, markerInfo.energyMade, markerInfo.energyPerHour)}
-          </div>
+          {estTarget(markerInfo.energyNeeded, markerInfo.energyMade, markerInfo.energyPerHour) &&
+            <>
+              <FormLabel className='mt-5 ml-7'>Estimated target:</FormLabel>
+              <div className='flex font-semibold text-5xl text-neutral-800 mt-5 mb-5 ml-7'>
+                {estTarget(markerInfo.energyNeeded, markerInfo.energyMade, markerInfo.energyPerHour)}
+              </div>
+            </>
+          }
         </div>
         : <div className='flex flex-col justify-center'>
           <FormControl className='flex flex-col mb-7'>

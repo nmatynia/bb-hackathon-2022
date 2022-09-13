@@ -36,9 +36,9 @@ export const dataMock: IDataMock[] = [
       },
       energyType: 'windmill',
       quantity:5,
-      energyNeeded: 1210,
-      energyMade: 932,
-      energyPerHour: 10000 // 2,000,000 * 5 
+      energyNeeded: 1000,
+      energyMade: 600,
+      energyPerHour: 10000 
 
     },
     {
@@ -50,9 +50,21 @@ export const dataMock: IDataMock[] = [
       energyType: 'windmill',
       quantity: 7,
       energyNeeded: 709,
-      energyMade: 623,
-      energyPerHour: 14000 // 2,000,000 * 7
+      energyMade: 200,
+      energyPerHour: 14000 // 2,000 * 7
+    },
+    {
+      address: 'ul. Klonowa',
+      position: {
+        lat: 52.21322980032158, 
+        lng: 21.02230559682815
+      },
+      energyType: 'solarPanel',
+      quantity: 3,
+      energyNeeded: 800,
+      energyMade: 800,
+      energyPerHour: 0.96 // 0.32 * 3
     }
   ]
-
+//
 
