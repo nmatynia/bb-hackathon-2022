@@ -32,12 +32,23 @@ interface IProps {
   handleChangeAreaType: (type: string) => void
   handleChangeQuantity: (e: any) => void
   handleChangeYield: (e: any) => void
+  markerInfo: any;
 }
 //TODO retrieve data from backend to display 
 
 
-const LeftInterface: React.FC<IProps> = ({ handleChangeAreaType, handleChangeQuantity, handleChangeYield, areaType, quantity, yieldValue }) => {
+const LeftInterface: React.FC<IProps> = ({ 
+  handleChangeAreaType, 
+  handleChangeQuantity, 
+  handleChangeYield, 
+  areaType, 
+  quantity, 
+  yieldValue, 
+  markerInfo 
+}) => {
+
   const [showTooltip, setShowTooltip] = React.useState(false)
+  
   return (
     <div className='fixed w-[300px] top-0 mt-[100px] z-10 flex flex-col mx-16 rounded-lg  bg-gradient-to-b from-white to-neutral-100 shadow-2xl bg-opacity-90'>
       <h1 className='font-semibold text-2xl text-neutral-800 mt-7 mb-5 ml-7'>ul. Jakaśtam 34</h1>

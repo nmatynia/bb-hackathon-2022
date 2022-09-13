@@ -2,25 +2,19 @@ import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
 import markerIcon from '../../assets/map-pin.svg'
-
+import { dataMock } from './dataMock';
 
 const containerStyle = {
   width: '100vw',
   height: '100vh'
 };
-
-//TODO: Take position of fetched items[0].
-
-const center = {
-  lat: 52.2167,
-  lng: 21.0333,
-};
-
 interface IProps {
   setPos: React.Dispatch<React.SetStateAction<{
     lat: number;
     lng: number;
-  } | undefined>>
+  } | undefined>>,
+  setMarkerInfo: React.Dispatch<React.SetStateAction<any>>,
+  markerInfo: any
 }
 
 const Map:React.FC<IProps> = ({setPos}) => {
@@ -33,13 +27,18 @@ const Map:React.FC<IProps> = ({setPos}) => {
 
   let marker: google.maps.Marker;
 
-  const onLoad = React.useCallback(function callback(map: any) {
+  const center = {
+    lat: dataMock[0].position.lat,
+    lng: dataMock[0].position.lng,
+  };
+
+  const onLoad = React.useCallback(function callback(map: google.maps.Map) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map)
   }, [])
 
-  const onUnmount = React.useCallback(function callback(map: any) {
+  const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
     setMap(null)
   }, [])
 
