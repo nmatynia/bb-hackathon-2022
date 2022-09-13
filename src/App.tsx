@@ -1,7 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { LoginPage }  from './components/LoginPage/LoginPage'
-import { MainPage } from './components/LoginPage/MainPage/MainPage';
+import { MainPage } from './components/MainPage/MainPage';
 import React from 'react'
 
 const App = () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { apiKey } from "../../../../apikey";
-import markerIcon from '../../../../icons/map-pin.svg'
+import { apiKey } from "../../apikey";
+import markerIcon from '../../assets/map-pin.svg'
 
 
 const containerStyle = {
@@ -12,7 +12,6 @@ const containerStyle = {
 //TODO: Take position of fetched items[0].
 
 const center = {
- 
   lat: 52.2167,
   lng: 21.0333,
 };

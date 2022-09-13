@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "windmills": "url('/src/images/windmills.png')",
+        "windmills": "url('/src/assets/windmills.png')",
       }
     },
   },

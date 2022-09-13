@@ -1,17 +1,6 @@
-import React from 'react'
-import { NavBar } from './NavBar'
-import { Input } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
-import {
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-} from '@chakra-ui/react'
-import { AxiosResponse } from 'axios';
-import { useState } from 'react'
-import axios from 'axios'
-import { Redirect } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Button, Input } from '@chakra-ui/react'
+import axios, { AxiosResponse } from 'axios';
 interface IProps{
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -23,6 +12,7 @@ export const LoginPage:React.FC<IProps> = ({setLoggedIn}) => {
 
     const handleLoginChange = (e:React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
     const handlePasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+    
     //TODO: Error handeling
     const isError = false;
     const fetchLogin = async ()  => {
