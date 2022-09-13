@@ -4,15 +4,14 @@ import TopInterface from './TopInterface'
 import LeftInterface from './LeftInterface'
 import AdminPageModal from './AdminPageModal'
 import { useDisclosure } from '@chakra-ui/react'
-
+import { IDataMock } from './dataMock'
 
 export const MainPage = () => {
   const [areaType, setAreaType] = React.useState<string>('')
   const [quantity, setQuantity] = React.useState<number>(0)
   const [yieldValue, setYieldValue] = React.useState(0)
   const [pos,setPos] = React.useState<{lat:number, lng:number}>()
-  const [markerInfo,setMarkerInfo] = React.useState();
-  const [mockedData, setMockedData] = React.useState<Array<any>>()
+  const [markerInfo,setMarkerInfo] = React.useState<IDataMock | null>(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRefMain = React.useRef(null)

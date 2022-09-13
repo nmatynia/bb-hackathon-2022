@@ -1,8 +1,10 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
-import markerIcon from '../../assets/map-pin.svg'
+import markerIcon from '../../assets/icons/map-pin.svg'
 import { dataMock } from './dataMock';
+import  windmillIcon from '../../assets/icons/windmill.svg'
+import  solarPanelIcon from '../../assets/icons/solar-panel-solid.svg'
 
 const containerStyle = {
   width: '100vw',
@@ -17,7 +19,7 @@ interface IProps {
   markerInfo: any
 }
 
-const Map:React.FC<IProps> = ({setPos}) => {
+const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
@@ -36,6 +38,21 @@ const Map:React.FC<IProps> = ({setPos}) => {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map)
+
+    //Mocked markers are being added to map here
+    dataMock.forEach((marker)=>{
+      let newMarker = new google.maps.Marker({
+        position: marker.position,
+        map: map,
+        icon: marker.energyType === 'windmill' ? windmillIcon : solarPanelIcon
+      });
+      
+      newMarker.addListener('click',(e: google.maps.MapMouseEvent) => {
+        setMarkerInfo(marker)
+      })
+    })
+    //
+
   }, [])
 
   const onUnmount = React.useCallback(function callback(map: google.maps.Map) {

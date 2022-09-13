@@ -1,11 +1,12 @@
-interface IDataMock{
+export interface IDataMock{
     address: string,
     position: {
         lat: number,
         lng: number
     }
     energyNeeded: number,
-    energyMade: number
+    energyMade: number,
+    energyType: 'windmill' | 'solarPanel'
 }
 
 export const dataMock: IDataMock[] = [
@@ -17,6 +18,7 @@ export const dataMock: IDataMock[] = [
       },
       energyNeeded: 60,
       energyMade: 60,
+      energyType: 'solarPanel'
     },
     {
       address: 'al. Ludwika Waryńskiego',
@@ -26,6 +28,7 @@ export const dataMock: IDataMock[] = [
       },
       energyNeeded: 30,
       energyMade: 60,
+      energyType: 'windmill'
     },
     {
       address: 'ul. Goworka',
@@ -35,5 +38,6 @@ export const dataMock: IDataMock[] = [
       },
       energyNeeded: 23,
       energyMade: 10,
+      energyType: 'windmill'
     }
   ]
