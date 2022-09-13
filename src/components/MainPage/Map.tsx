@@ -41,13 +41,13 @@ const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
 
     //Mocked markers are being added to map here
     dataMock.forEach((marker)=>{
-      let newMarker = new google.maps.Marker({
+      let googleMarker = new google.maps.Marker({
         position: marker.position,
         map: map,
         icon: marker.energyType === 'windmill' ? windmillIcon : solarPanelIcon
       });
       
-      newMarker.addListener('click',(e: google.maps.MapMouseEvent) => {
+      googleMarker.addListener('click',(e: google.maps.MapMouseEvent) => {
         setMarkerInfo(marker)
       })
     })
@@ -80,8 +80,6 @@ const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
     }
     setPos(positionObj)
     placeMarker(e.latLng!, map);
-    
-
   });
 
   return isLoaded ? (
