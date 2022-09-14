@@ -4,13 +4,14 @@ import TopInterface from './TopInterface'
 import LeftInterface from './LeftInterface'
 import AdminPageModal from './AdminPageModal'
 import { useDisclosure } from '@chakra-ui/react'
-
+import { IDataMock } from './dataMock'
 
 export const MainPage = () => {
   const [areaType, setAreaType] = React.useState<string>('')
   const [quantity, setQuantity] = React.useState<number>(0)
   const [yieldValue, setYieldValue] = React.useState(0)
   const [pos,setPos] = React.useState<{lat:number, lng:number}>()
+  const [markerInfo,setMarkerInfo] = React.useState<IDataMock | null>(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRefMain = React.useRef(null)
@@ -25,9 +26,17 @@ export const MainPage = () => {
 
   return (
     <div>
-      <TopInterface
-        onOpen={onOpen}
+      <TopInterface onOpen={onOpen}/>
+      <LeftInterface
+        handleChangeAreaType={handleChangeAreaType}
+        handleChangeQuantity={handleChangeQuantity}
+        handleChangeYield={handleChangeYield}
+        quantity={quantity}
+        areaType={areaType}
+        yieldValue={yieldValue}
+        markerInfo={markerInfo}
       />
+      <Map setPos={setPos} setMarkerInfo={setMarkerInfo} markerInfo={markerInfo} />
       <AdminPageModal
        finalRef={finalRefMain}
         isOpen={isOpen}
@@ -41,15 +50,6 @@ export const MainPage = () => {
         handleChangeYield={handleChangeYield}
         handleChangePosition={handleChangePosition}
         />
-      <LeftInterface
-        handleChangeAreaType={handleChangeAreaType}
-        handleChangeQuantity={handleChangeQuantity}
-        handleChangeYield={handleChangeYield}
-        quantity={quantity}
-        areaType={areaType}
-        yieldValue={yieldValue}
-      />
-      <Map setPos={setPos}/>
     </div>
   )
 }

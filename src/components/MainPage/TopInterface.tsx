@@ -1,10 +1,10 @@
+import { Box, IconButton, Menu, MenuButton, MenuItem, MenuList, Tag, Tooltip } from '@chakra-ui/react'
 import React from 'react'
-import { Menu, MenuButton, IconButton, MenuList, MenuItem, Box, Tag, Tooltip } from '@chakra-ui/react'
-import { FiSettings, FiMapPin } from 'react-icons/fi'
-import { HiOutlineTable, HiOutlineLogout } from 'react-icons/hi'
-import { FaUserCircle } from 'react-icons/fa'
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { BiSelection } from 'react-icons/bi'
+import { FaUserCircle } from 'react-icons/fa'
+import { FiMapPin, FiSettings } from 'react-icons/fi'
+import { HiOutlineLogout, HiOutlineTable } from 'react-icons/hi'
 import { TbShape2 } from 'react-icons/tb'
 
 interface IProps {
@@ -41,7 +41,8 @@ const TopInterface: React.FC<IProps> = ({ onOpen }) => {
         <MenuButton
           as={IconButton}
           aria-label='Options'
-          icon={<FaUserCircle className='w-10 h-10 rounded-3xl mr-7' />}
+          icon={<FaUserCircle className='w-10 h-10 rounded-3xl mr-7'/>}
+          variant=''
         />
         <MenuList>
           <MenuItem onClick={onOpen} icon={<HiOutlineTable className='w-5 h-5' />}>
