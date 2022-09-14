@@ -18,8 +18,19 @@ All screenshots present the actual app.
 ![4](https://user-images.githubusercontent.com/84076941/190185502-7d8ba5da-59ed-46a1-bf73-02d3bc63266c.PNG)
 ![1](https://user-images.githubusercontent.com/84076941/190185526-a1e0802b-cd9e-4d64-bea6-f59ab05068e4.PNG)
 ![2](https://user-images.githubusercontent.com/84076941/190185535-eafcf537-ae8f-4038-aea6-a18edf98a31d.PNG)
-![3](https://user-images.githubusercontent.com/84076941/190185543-42602956-fc3c-4972-a547-56200e6bcdbf.PNG)
+![3](https://user-images.githubusercontent.com/84076941/190185543-42602956-fc3c-4972-a547-56200e6bcdbf.PNG)  
 
+## Tech stack
+### Frontend
+- TypeScript
+- React
+- TailwindCSS
+- Chakra UI
+### Backend
+- Java Spring Boot
+- GraphQL
+### Other
+- Figma
 ## Contact 
 Norbert Matynia - norbert.matyniaa@gmail.com  
 Mikolaj Wolski - 
