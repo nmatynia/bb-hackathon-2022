@@ -79,6 +79,7 @@ const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
       lng: e.latLng!.lng() as number,
     }
     setPos(positionObj)
+    setMarkerInfo(null)
     placeMarker(e.latLng!, map);
   });
 
