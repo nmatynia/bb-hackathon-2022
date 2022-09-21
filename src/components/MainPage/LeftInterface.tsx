@@ -1,5 +1,5 @@
 import React from 'react'
-import { IDataMock } from './dataMock'
+import { companiesMock, ICompaniesMock, IDataMock } from './dataMock'
 
 import {
   FormControl, FormLabel, IconButton, Divider, Tooltip, Button,
@@ -13,60 +13,64 @@ interface IProps {
   areaType: string,
   quantity: number,
   yieldValue: number,
+  company: ICompaniesMock | null
   handleChangeAreaType: (type: string) => void
   handleChangeQuantity: (e: any) => void
   handleChangeYield: (e: any) => void
+  handleChangeCompany: (_company: ICompaniesMock) => void
   markerInfo: IDataMock | null;
 }
-//TODO retrieve data from backend to display 
+//TODO: retrieve data from backend to display 
 
 
 const LeftInterface: React.FC<IProps> = ({
   handleChangeAreaType,
   handleChangeQuantity,
   handleChangeYield,
+  handleChangeCompany,
   areaType,
   quantity,
+  company,
   yieldValue,
   markerInfo
 }) => {
 
   const [showTooltip, setShowTooltip] = React.useState(false)
-  
+
   const estTarget = (energyNeeded: number, energyMade: number, energyPerHour: number) => {
     const estInHours = (energyNeeded - energyMade) / energyPerHour
     const days = Math.floor(estInHours / 24)
     const hours = Math.round(estInHours % 24)
-    return estInHours > 0 ?(
+    return estInHours > 0 ? (
       <>
         {days !== 0 && (
           <div className='flex'>
             {days}<div className='ml-1 text-sm mr-3'>days</div>
           </div>
         )}
-        {days !== 0 && hours !== 0 
-          ?<div className='flex'>
+        {days !== 0 && hours !== 0
+          ? <div className='flex'>
             {hours}<div className='ml-1 text-sm'>hours</div>
           </div>
-          :<div className='text-3xl'>
+          : <div className='text-3xl'>
             less than {hours} hours
           </div>
         }
       </>
-    ): false
+    ) : false
   }
 
-  const energyGatheredColor = (energyNeeded: number, energyMade: number) =>{
-    const goalPrecentage = Math.round(energyMade/energyNeeded * 100);
-    if(goalPrecentage < 50){
+  const energyGatheredColor = (energyNeeded: number, energyMade: number) => {
+    const goalPrecentage = Math.round(energyMade / energyNeeded * 100);
+    if (goalPrecentage < 50) {
       return 'text-red-300'
     }
-    else if(goalPrecentage >= 50 && goalPrecentage <75){
+    else if (goalPrecentage >= 50 && goalPrecentage < 75) {
       return 'text-orange-300'
     }
-    else if(goalPrecentage >= 75 && goalPrecentage <= 99){
+    else if (goalPrecentage >= 75 && goalPrecentage <= 99) {
       return 'text-green-300'
-    }else{
+    } else {
       return 'text-green-700'
     }
   }
@@ -143,6 +147,24 @@ const LeftInterface: React.FC<IProps> = ({
             </div>
           }
           {quantity > 0 &&
+            <div>
+              <Divider className='mb-7' />
+              <FormLabel className='ml-7'>Provider</FormLabel>
+              {companiesMock
+                .filter(c => (areaType === 'solarPanel' && c.solarPanels) || (areaType === 'windmill' && c.windmills))
+                .map((companyData, idx) => (
+                  <div
+                    className={`rounded-lg border-2 mx-7 first:my-0 my-3 hover:cursor-pointer ${company === companyData ? 'text-white bg-neutral-800' : ''}`}
+                    onClick={() => handleChangeCompany(companyData)}
+                  >
+                    <header className='text-xl ml-7 my-7 font-bold'>{companyData.name}</header>
+                    <p className='ml-7'>Avg. Performance: {Math.round(companyData[areaType === 'windmill' ? 'windmills' : 'solarPanels']?.avgPerformance! * quantity * 100) / 100}</p>
+                    <p className='ml-7 mb-7'>Total costs: {Math.round(companyData[areaType === 'windmill' ? 'windmills' : 'solarPanels']?.cost! * quantity * 100) / 100}</p>
+                  </div>
+                ))}
+            </div>
+          }
+          {company &&
             <div>
               <Divider className='mb-7' />
               <FormLabel className='ml-7'>Yield Guarentee</FormLabel>
