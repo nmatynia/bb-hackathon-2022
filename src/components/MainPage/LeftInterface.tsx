@@ -113,23 +113,22 @@ const LeftInterface: React.FC<IProps> = ({
             <FormLabel className='ml-7'>Area Type</FormLabel>
             <div className='flex ml-7 space-x-7'>
               <IconButton
-                bgColor='blackAlpha.800'
-                color='white'
+                bgColor={areaType === 'solarPanel' ? 'blackAlpha.800' : 'transparent'}
+                color={areaType === 'solarPanel' ? 'white' : 'blackAlpha.800'}
                 variant={'outline'}
                 aria-label='Solar Panel'
                 icon={<FaSolarPanel />}
                 size='lg'
                 onClick={() => handleChangeAreaType('solarPanel')}
-                className=''
               />
               <IconButton
-                bgColor='blackAlpha.800'
-                color='white'
+                bgColor={areaType === 'windmill' ? 'blackAlpha.800' : 'transparent'}
+                color={areaType === 'windmill' ? 'white' : 'blackAlpha.800'}
+                variant={'outline'}
                 aria-label='Windmill'
                 icon={<TbWindmill />}
                 size='lg'
                 onClick={() => handleChangeAreaType('windmill')}
-                className=''
               />
             </div>
           </FormControl>
@@ -154,7 +153,8 @@ const LeftInterface: React.FC<IProps> = ({
                 .filter(c => (areaType === 'solarPanel' && c.solarPanels) || (areaType === 'windmill' && c.windmills))
                 .map((companyData, idx) => (
                   <div
-                    className={`rounded-lg border-2 mx-7 first:my-0 my-3 hover:cursor-pointer ${company === companyData ? 'text-white bg-neutral-800' : ''}`}
+                    key={idx}
+                    className={`rounded-lg border-[1px] mx-7 first:my-0 my-3 hover:cursor-pointer ${company === companyData ? 'text-white bg-neutral-800' : ''}`}
                     onClick={() => handleChangeCompany(companyData)}
                   >
                     <header className='text-xl ml-7 my-7 font-bold'>{companyData.name}</header>
