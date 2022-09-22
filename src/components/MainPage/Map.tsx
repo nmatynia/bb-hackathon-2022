@@ -7,114 +7,109 @@ import windmillIcon from '../../assets/icons/windmill.svg'
 import solarPanelIcon from '../../assets/icons/solar-panel-solid.svg'
 
 const containerStyle = {
-  width: '100vw',
-  height: '100vh'
+	width: '100vw',
+	height: '100vh'
 };
 interface IProps {
-  setPos: React.Dispatch<React.SetStateAction<{
-    lat: number;
-    lng: number;
-  } | undefined>>,
-  setMarkerInfo: React.Dispatch<React.SetStateAction<any>>,
-  markerInfo: any
-  handleResetAddMarkerInfo: () => void
+	setPos: React.Dispatch<React.SetStateAction<{ lat: number, lng: number } | undefined>>,
+	setMarkerInfo: React.Dispatch<React.SetStateAction<any>>,
+	markerInfo: any
+	handleResetAddMarkerInfo: () => void
 }
 
 const Map: React.FC<IProps> = ({
-  setPos,
-  setMarkerInfo,
-  markerInfo,
-  handleResetAddMarkerInfo
+	setPos,
+	setMarkerInfo,
+	markerInfo,
+	handleResetAddMarkerInfo
 }) => {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: apiKey,
-  })
 
-  const [map, setMap] = React.useState<google.maps.Map | null>(null)
+	const { isLoaded } = useJsApiLoader({
+		id: 'google-map-script',
+		googleMapsApiKey: apiKey,
+	})
 
-  let marker: google.maps.Marker;
+	const [map, setMap] = React.useState<google.maps.Map | null>(null)
 
-  const center = {
-    lat: dataMock[0].position.lat,
-    lng: dataMock[0].position.lng,
-  };
+	let marker: google.maps.Marker;
 
-  const onLoad = React.useCallback(function callback(map: google.maps.Map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map)
+	const center = {
+		lat: dataMock[0].position.lat,
+		lng: dataMock[0].position.lng,
+	};
 
-    //Mocked markers are being added to map here
-    dataMock.forEach((marker) => {
-      let googleMarker = new google.maps.Marker({
-        position: marker.position,
-        map: map,
-        icon: marker.energyType === 'windmill' ? windmillIcon : solarPanelIcon
-      });
+	const onLoad = React.useCallback(function callback(map: google.maps.Map) {
+		const bounds = new window.google.maps.LatLngBounds(center);
+		map.fitBounds(bounds);
+		setMap(map)
 
-      googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
-        setMarkerInfo(marker)
-        handleResetAddMarkerInfo()
-      })
-    })
-    //
+		//Mocked markers are being added to map here
+		dataMock.forEach((marker) => {
+			let googleMarker = new google.maps.Marker({
+				position: marker.position,
+				map: map,
+				icon: marker.energyType === 'windmill' ? windmillIcon : solarPanelIcon
+			});
 
-  }, [])
+			googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
+				setMarkerInfo(marker)
+				handleResetAddMarkerInfo()
+			})
+		})
+		//
 
-  const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
-    setMap(null)
-  }, [])
+	}, [])
 
-  const placeMarker = (position: google.maps.LatLng, map: google.maps.Map) => {
-    if (marker) {
-      marker.setPosition(position)
-      return;
-    }
+	const onUnmount = React.useCallback((map: google.maps.Map) => setMap(null), [])
 
-    marker = new google.maps.Marker({
-      position: position,
-      map: map,
-      icon: markerIcon
-    });
-    map.panTo(position);
-  }
+	const placeMarker = (position: google.maps.LatLng, map: google.maps.Map) => {
+		if (marker) {
+			marker.setPosition(position)
+			return;
+		}
 
-  map?.addListener('click', (e: google.maps.MapMouseEvent) => {
-    const positionObj = {
-      lat: e.latLng!.lat() as number,
-      lng: e.latLng!.lng() as number,
-    }
-    setPos(positionObj)
-    setMarkerInfo(null)
-    placeMarker(e.latLng!, map);
-  });
+		marker = new google.maps.Marker({
+			position: position,
+			map: map,
+			icon: markerIcon
+		});
+		map.panTo(position);
+	}
 
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={5}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-      options={{
-        streetViewControl: false,
-        fullscreenControl: false,
-        mapTypeControlOptions: {
-          position: google.maps.ControlPosition.BOTTOM_CENTER
-        },
-        styles: [
-          {
-            featureType: "poi",
-            stylers: [
-              { visibility: "off" }
-            ]
-          }
-        ]
-      }}
-    >
-    </GoogleMap>
-  ) : <></>
+	map?.addListener('click', (e: google.maps.MapMouseEvent) => {
+		const positionObj = {
+			lat: e.latLng!.lat() as number,
+			lng: e.latLng!.lng() as number,
+		}
+		setPos(positionObj)
+		setMarkerInfo(null)
+		placeMarker(e.latLng!, map);
+	});
+
+	return isLoaded ?
+		<GoogleMap
+			mapContainerStyle={containerStyle}
+			center={center}
+			zoom={5}
+			onLoad={onLoad}
+			onUnmount={onUnmount}
+			options={{
+				streetViewControl: false,
+				fullscreenControl: false,
+				mapTypeControlOptions: {
+					position: google.maps.ControlPosition.BOTTOM_CENTER
+				},
+				styles: [
+					{
+						featureType: "poi",
+						stylers: [
+							{ visibility: "off" }
+						]
+					}
+				]
+			}}
+		/>
+		: <></>
 }
 
 export default React.memo(Map)
