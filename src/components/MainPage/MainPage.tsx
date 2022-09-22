@@ -24,10 +24,19 @@ export const MainPage = () => {
     setAreaType(type)
     setCompany(null)
   }
-  const handleChangeQuantity = (e: any) => setQuantity(e)
+  const handleChangeQuantity = (e: any) => {
+    e <= 0 && setCompany(null)
+    setQuantity(e)
+  }
   const handleChangeYield = (e: any) => setYieldValue(e)
   const handleChangeCompany = (_company: ICompaniesMock) => setCompany(_company)
   const handleChangePosition = (obj: { lat: number, lng: number }) => setPos(obj)
+  const handleResetAddMarkerInfo = () => {
+    setAreaType('')
+    setQuantity(0)
+    setYieldValue(0)
+    setCompany(null)
+  }
 
   return (
     <div>
@@ -43,7 +52,12 @@ export const MainPage = () => {
         company={company}
         markerInfo={markerInfo}
       />
-      <Map setPos={setPos} setMarkerInfo={setMarkerInfo} markerInfo={markerInfo} />
+      <Map
+        setPos={setPos}
+        setMarkerInfo={setMarkerInfo}
+        markerInfo={markerInfo}
+        handleResetAddMarkerInfo={handleResetAddMarkerInfo}
+      />
       <AdminPageModal
         finalRef={finalRefMain}
         isOpen={isOpen}
