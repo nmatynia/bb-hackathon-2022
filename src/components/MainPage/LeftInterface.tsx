@@ -76,7 +76,7 @@ const LeftInterface: React.FC<IProps> = ({
   }
 
   return (
-    <div className='fixed min-w-[300px] max-w-[400px] top-0 mt-[100px] z-10 flex flex-col mx-16 rounded-lg  bg-gradient-to-b from-white to-neutral-100 shadow-2xl bg-opacity-90'>
+    <div className='fixed min-w-[300px] max-w-[400px] max-h-[80vh] overflow-y-auto scrollbar top-0 mt-[100px] z-10 flex flex-col mx-16 rounded-lg  bg-gradient-to-b from-white to-neutral-100 shadow-2xl bg-opacity-90'>
       <h1 className='font-semibold text-2xl text-neutral-800 m-7 mb-5'>{markerInfo?.address ?? 'Google Geocoding API'}</h1>
       {markerInfo
         ? <div>
