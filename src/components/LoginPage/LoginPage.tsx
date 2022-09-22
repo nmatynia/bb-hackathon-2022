@@ -1,28 +1,30 @@
 import React, { useState } from 'react'
 import { Button, Input } from '@chakra-ui/react'
 import axios, { AxiosResponse } from 'axios';
-interface IProps{
+import { FaFacebook } from 'react-icons/fa'
+import { AiFillGoogleCircle } from 'react-icons/ai'
+interface IProps {
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const LoginPage:React.FC<IProps> = ({setLoggedIn}) => {
+export const LoginPage: React.FC<IProps> = ({ setLoggedIn }) => {
 
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLoginChange = (e:React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
-    const handlePasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-    
+    const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
     //TODO: Error handeling
     const isError = false;
-    const fetchLogin = async ()  => {
-        if(sessionStorage.getItem('logged') === null){
+    const fetchLogin = async () => {
+        if (sessionStorage.getItem('logged') === null) {
             const results = await axios.post('http://10.10.60.98:8080/auth/loginUser', { userName, password }, { withCredentials: true }).catch(x => x as AxiosResponse)
             console.log(results.data.accessToken.length > 0)
-            sessionStorage.setItem('logged',results.data.expiresIn)
+            sessionStorage.setItem('logged', results.data.expiresIn)
             setLoggedIn(results.data.accessToken.length > 0)
-        }else if((Date.now() - Number(String(sessionStorage.getItem('logged')))) > 300) return;
-        
+        } else if ((Date.now() - Number(String(sessionStorage.getItem('logged')))) > 300) return;
+
     }
 
     return (
@@ -49,8 +51,8 @@ export const LoginPage:React.FC<IProps> = ({setLoggedIn}) => {
                                 }
                                 <Button width='300px' colorScheme='teal' className='' onClick={fetchLogin}>Login</Button>
                                 <p className='font-bold mb-5'>or</p>
-                                <Button width='300px' colorScheme='blue' className=''>Facebook</Button>
-                                <Button width='300px' variant='outline' colorScheme='black' className=''>Google</Button>
+                                <Button width='300px' colorScheme='blue' className='' leftIcon={<FaFacebook className='w-5 h-5 mr-1' />}>Facebook</Button>
+                                <Button width='300px' variant='outline' colorScheme='black' className='' leftIcon={<AiFillGoogleCircle className='w-6 h-6 mr-1' />}>Google</Button>
                                 <Button width='300px' colorScheme='teal' className='' >Join us</Button>
                             </div>
                         </div>
