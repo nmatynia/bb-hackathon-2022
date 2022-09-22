@@ -3,8 +3,8 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
 import markerIcon from '../../assets/icons/map-pin.svg'
 import { dataMock } from './dataMock';
-import  windmillIcon from '../../assets/icons/windmill.svg'
-import  solarPanelIcon from '../../assets/icons/solar-panel-solid.svg'
+import windmillIcon from '../../assets/icons/windmill.svg'
+import solarPanelIcon from '../../assets/icons/solar-panel-solid.svg'
 
 const containerStyle = {
   width: '100vw',
@@ -17,9 +17,15 @@ interface IProps {
   } | undefined>>,
   setMarkerInfo: React.Dispatch<React.SetStateAction<any>>,
   markerInfo: any
+  handleResetAddMarkerInfo: () => void
 }
 
-const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
+const Map: React.FC<IProps> = ({
+  setPos,
+  setMarkerInfo,
+  markerInfo,
+  handleResetAddMarkerInfo
+}) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
@@ -40,15 +46,16 @@ const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
     setMap(map)
 
     //Mocked markers are being added to map here
-    dataMock.forEach((marker)=>{
+    dataMock.forEach((marker) => {
       let googleMarker = new google.maps.Marker({
         position: marker.position,
         map: map,
         icon: marker.energyType === 'windmill' ? windmillIcon : solarPanelIcon
       });
-      
-      googleMarker.addListener('click',(e: google.maps.MapMouseEvent) => {
+
+      googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
         setMarkerInfo(marker)
+        handleResetAddMarkerInfo()
       })
     })
     //
@@ -72,7 +79,7 @@ const Map:React.FC<IProps> = ({setPos, setMarkerInfo, markerInfo}) => {
     });
     map.panTo(position);
   }
-  
+
   map?.addListener('click', (e: google.maps.MapMouseEvent) => {
     const positionObj = {
       lat: e.latLng!.lat() as number,
