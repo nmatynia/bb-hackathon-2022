@@ -3,8 +3,8 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
 import markerIcon from '../../assets/icons/map-pin.svg'
 import { dataMock } from './dataMock';
-import windmillIcon from '../../assets/icons/windmill.svg'
-import solarPanelIcon from '../../assets/icons/solar-panel-solid.svg'
+import windmillIcon from '../../assets/icons/windmill-circle.svg'
+import solarPanelIcon from '../../assets/icons/solar-panel-circle.svg'
 
 const containerStyle = {
 	width: '100vw',
