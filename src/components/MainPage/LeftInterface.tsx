@@ -63,13 +63,13 @@ const LeftInterface: React.FC<IProps> = ({
 	const energyGatheredColor = (energyNeeded: number, energyMade: number) => {
 		const goalPrecentage = Math.round(energyMade / energyNeeded * 100);
 		if (goalPrecentage < 50) {
-			return 'text-red-300'
+			return 'text-red-500'
 		}
 		else if (goalPrecentage >= 50 && goalPrecentage < 75) {
-			return 'text-orange-300'
+			return 'text-orange-500'
 		}
 		else if (goalPrecentage >= 75 && goalPrecentage <= 99) {
-			return 'text-green-300'
+			return 'text-yellow-400'
 		} else {
 			return 'text-green-700'
 		}
