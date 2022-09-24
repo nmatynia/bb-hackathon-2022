@@ -3,8 +3,20 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
 import markerIcon from '../../assets/icons/map-pin.svg'
 import { dataMock } from './dataMock';
-import windmillIcon from '../../assets/icons/windmill-circle.svg'
-import solarPanelIcon from '../../assets/icons/solar-panel-circle.svg'
+
+// import windmillIcon from '../../assets/icons/windmill-circle.svg'
+// import solarPanelIcon from '../../assets/icons/solar-panel-circle.svg'
+
+import solarPanelRed from '../../assets/icons/solarPanel/solar-panel-circle-red.svg'
+import solarPanelOrange from '../../assets/icons/solarPanel/solar-panel-circle-orange.svg'
+import solarPanelYellow from '../../assets/icons/solarPanel/solar-panel-circle-yellow.svg'
+import solarPanelGreen from '../../assets/icons/solarPanel/solar-panel-circle-green.svg'
+
+import windmillRed from '../../assets/icons/windmill/windmill-circle-red.svg'
+import windmillOrange from '../../assets/icons/windmill/windmill-circle-orange.svg'
+import windmillYellow from '../../assets/icons/windmill/windmill-circle-yellow.svg'
+import windmillGreen from '../../assets/icons/windmill/windmill-circle-green.svg'
+
 
 const containerStyle = {
 	width: '100vw',
@@ -38,6 +50,23 @@ const Map: React.FC<IProps> = ({
 		lng: dataMock[0].position.lng,
 	};
 
+	const chooseMarkerIcon = (energyType: string, energyNeeded: number, energyMade: number) => {
+		const goalPrecentage = Math.round(energyMade / energyNeeded * 100);
+
+		if (goalPrecentage < 50) {
+
+			return energyType === 'windmill' ? windmillRed : solarPanelRed
+		}
+		else if (goalPrecentage >= 50 && goalPrecentage < 75) {
+			return energyType === 'windmill' ? windmillOrange : solarPanelOrange
+		}
+		else if (goalPrecentage >= 75 && goalPrecentage <= 99) {
+			return energyType === 'windmill' ? windmillYellow : solarPanelYellow
+		} else {
+			return energyType === 'windmill' ? windmillGreen : solarPanelGreen
+		}
+
+	}
 	const onLoad = React.useCallback(function callback(map: google.maps.Map) {
 		const bounds = new window.google.maps.LatLngBounds(center);
 		map.fitBounds(bounds);
@@ -48,7 +77,7 @@ const Map: React.FC<IProps> = ({
 			let googleMarker = new google.maps.Marker({
 				position: marker.position,
 				map: map,
-				icon: marker.energyType === 'windmill' ? windmillIcon : solarPanelIcon
+				icon: chooseMarkerIcon(marker.energyType, marker.energyNeeded, marker.energyMade)
 			});
 
 			googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
