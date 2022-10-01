@@ -1,4 +1,6 @@
 # EnerSight
+![chrome_H7Zn6wUsta](https://user-images.githubusercontent.com/84076941/193407946-8b5e8e11-2ce1-47f6-ac1e-01996cca4eef.gif)
+
 ## About
 Green energy app that enables users to track their photofoltanics and wind power sources.  
 The project originated at **hackathon** called BB Days 4 IT 2022.  
@@ -12,14 +14,6 @@ how much energy it would produce each month and when the invesment will pay off.
 Companies on the other hand have much more indepth look into the statistics of their clients.  
 They can manage their resources by adding/removing/editing the pins on the map.
 
-## Screenshots
-All screenshots present the actual app.  
-
-![4](https://user-images.githubusercontent.com/84076941/190185502-7d8ba5da-59ed-46a1-bf73-02d3bc63266c.PNG)
-![1](https://user-images.githubusercontent.com/84076941/190185526-a1e0802b-cd9e-4d64-bea6-f59ab05068e4.PNG)
-![2](https://user-images.githubusercontent.com/84076941/190185535-eafcf537-ae8f-4038-aea6-a18edf98a31d.PNG)
-![3](https://user-images.githubusercontent.com/84076941/190185543-42602956-fc3c-4972-a547-56200e6bcdbf.PNG)  
-
 ## Tech stack
 ### Frontend
 - TypeScript
@@ -31,6 +25,15 @@ All screenshots present the actual app.
 - GraphQL
 ### Other
 - Figma
+
+## Screenshots
+All screenshots present the actual app.  
+
+![4](https://user-images.githubusercontent.com/84076941/190185502-7d8ba5da-59ed-46a1-bf73-02d3bc63266c.PNG)
+![1](https://user-images.githubusercontent.com/84076941/193407889-3dfabc22-74e5-4d61-baab-7ad00f664359.JPG)
+![2](https://user-images.githubusercontent.com/84076941/193407893-6f228c60-c2c1-400a-886e-729edeafff38.JPG)
+![3](https://user-images.githubusercontent.com/84076941/190185543-42602956-fc3c-4972-a547-56200e6bcdbf.PNG)  
+
 ## Contact 
 Norbert Matynia - norbert.matyniaa@gmail.com  
 Mikolaj Wolski - 
