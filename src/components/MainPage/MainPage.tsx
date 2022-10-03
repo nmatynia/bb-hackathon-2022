@@ -4,7 +4,7 @@ import TopInterface from './TopInterface'
 import LeftInterface from './LeftInterface'
 import AdminPageModal from './AdminPageModal'
 import { useDisclosure } from '@chakra-ui/react'
-import { ICompaniesMock, IDataMock } from './dataMock'
+import { ICompaniesMock, IDataMock, dataMock } from './dataMock'
 
 export const MainPage = () => {
 	const [areaType, setAreaType] = React.useState<string>('')
@@ -13,6 +13,7 @@ export const MainPage = () => {
 	const [company, setCompany] = React.useState<ICompaniesMock | null>(null)
 	const [pos, setPos] = React.useState<{ lat: number, lng: number }>()
 	const [markerInfo, setMarkerInfo] = React.useState<IDataMock | null>(null);
+	const [refreshMap, setRefreshMap] = React.useState(false)
 
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const finalRefMain = React.useRef(null)
@@ -37,6 +38,21 @@ export const MainPage = () => {
 		setYieldValue(0)
 		setCompany(null)
 	}
+	const handleAddNewMarker = () => {
+		dataMock.push({
+			address: 'TODO - Temporary',
+			position: {
+				lat: pos!.lat,
+				lng: pos!.lng
+			},
+			energyType: areaType as "windmill" | "solarPanel",
+			quantity: quantity,
+			energyMade: 0,
+			energyNeeded: 2137, // TODO Add energy needed section for user to input 
+			energyPerHour: Math.round(company![areaType === 'windmill' ? 'windmills' : 'solarPanels']?.avgPerformance! * quantity * 100) / 100
+		})
+		setRefreshMap(!refreshMap);
+	}
 
 	return (
 		<div>
@@ -50,13 +66,17 @@ export const MainPage = () => {
 				areaType={areaType}
 				yieldValue={yieldValue}
 				company={company}
+				pos={pos}
 				markerInfo={markerInfo}
+				handleAddNewMarker={handleAddNewMarker}
 			/>
 			<Map
 				setPos={setPos}
 				setMarkerInfo={setMarkerInfo}
 				markerInfo={markerInfo}
 				handleResetAddMarkerInfo={handleResetAddMarkerInfo}
+				dataMock={dataMock}
+				refreshMap={refreshMap}
 			/>
 			<AdminPageModal
 				finalRef={finalRefMain}

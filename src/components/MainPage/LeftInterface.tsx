@@ -19,6 +19,8 @@ interface IProps {
 	handleChangeYield: (e: any) => void
 	handleChangeCompany: (_company: ICompaniesMock) => void
 	markerInfo: IDataMock | null;
+	pos: { lat: number, lng: number } | undefined
+	handleAddNewMarker: () => void;
 }
 //TODO: retrieve data from backend to display 
 
@@ -32,7 +34,9 @@ const LeftInterface: React.FC<IProps> = ({
 	quantity,
 	company,
 	yieldValue,
-	markerInfo
+	pos,
+	markerInfo,
+	handleAddNewMarker
 }) => {
 
 	const [showTooltip, setShowTooltip] = React.useState(false)
@@ -208,7 +212,7 @@ const LeftInterface: React.FC<IProps> = ({
 
 					{
 						yieldValue > 0 &&
-						<Button color={'white'} bgColor={'teal.500'} borderTopRadius={0} className="mt-7">
+						<Button color={'white'} bgColor={'teal.500'} borderTopRadius={0} className="mt-7" onClick={handleAddNewMarker}>
 							Add
 						</Button>
 					}

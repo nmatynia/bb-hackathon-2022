@@ -2,7 +2,6 @@ import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
 import markerIcon from '../../assets/icons/map-pin.svg'
-import { dataMock } from './dataMock';
 
 // import windmillIcon from '../../assets/icons/windmill-circle.svg'
 // import solarPanelIcon from '../../assets/icons/solar-panel-circle.svg'
@@ -16,6 +15,7 @@ import windmillRed from '../../assets/icons/windmill/windmill-circle-red.svg'
 import windmillOrange from '../../assets/icons/windmill/windmill-circle-orange.svg'
 import windmillYellow from '../../assets/icons/windmill/windmill-circle-yellow.svg'
 import windmillGreen from '../../assets/icons/windmill/windmill-circle-green.svg'
+import { IDataMock } from './dataMock';
 
 
 const containerStyle = {
@@ -27,13 +27,17 @@ interface IProps {
 	setMarkerInfo: React.Dispatch<React.SetStateAction<any>>,
 	markerInfo: any
 	handleResetAddMarkerInfo: () => void
+	dataMock: IDataMock[]
+	refreshMap: boolean;
 }
 
 const Map: React.FC<IProps> = ({
 	setPos,
 	setMarkerInfo,
 	markerInfo,
-	handleResetAddMarkerInfo
+	handleResetAddMarkerInfo,
+	dataMock,
+	refreshMap
 }) => {
 
 	const { isLoaded } = useJsApiLoader({
@@ -67,7 +71,8 @@ const Map: React.FC<IProps> = ({
 		}
 
 	}
-	const onLoad = React.useCallback(function callback(map: google.maps.Map) {
+
+	const onLoad = React.useCallback((map: google.maps.Map) => {
 		const bounds = new window.google.maps.LatLngBounds(center);
 		map.fitBounds(bounds);
 		setMap(map)
@@ -89,7 +94,23 @@ const Map: React.FC<IProps> = ({
 
 	}, [])
 
-	const onUnmount = React.useCallback((map: google.maps.Map) => setMap(null), [])
+	//User can add new marker 
+	React.useEffect(() => {
+		const newlyAddedData = dataMock[dataMock.length - 1]
+		const googleMarker = map && new google.maps.Marker({
+			position: newlyAddedData.position,
+			map: map,
+			icon: chooseMarkerIcon(newlyAddedData.energyType, newlyAddedData.energyNeeded, newlyAddedData.energyMade)
+		});
+
+		googleMarker && googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
+			setMarkerInfo(newlyAddedData)
+			handleResetAddMarkerInfo()
+		})
+
+	}, [map, refreshMap])
+
+	const onUnmount = React.useCallback(() => setMap(null), [])
 
 	const placeMarker = (position: google.maps.LatLng, map: google.maps.Map) => {
 		if (marker) {
