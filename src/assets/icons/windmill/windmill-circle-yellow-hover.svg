@@ -1,0 +1,21 @@
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="icon icon-tabler icon-tabler-windmill" 
+  width="30" 
+  height="30" 
+  viewBox="0 0 30 30" 
+  stroke-width="2" 
+  stroke="#facc15" 
+  fill="none" 
+  stroke-linecap="round" 
+  stroke-linejoin="round">
+/>
+  <circle cx="50%" cy="50%" r="45%" fill="#facc15"/>
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M15 15c2.76 0 5 -2.01 5 -4.5s-2.24 -4.5 -5 -4.5v9z" stroke="white" />
+  <path d="M15 15c0 2.76 2.01 5 4.5 5s4.5 -2.24 4.5 -5h-9z" stroke="white" />
+  <path d="M15 15c-2.76 0 -5 2.01 -5 4.5s2.24 4.5 5 4.5v-9z" stroke="white" />
+  <path d="M15 15c0 -2.76 -2.01 -5 -4.5 -5s-4.5 2.24 -4.5 5h9z" stroke="white" />
+</svg>
+
+

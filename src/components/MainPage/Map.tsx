@@ -11,10 +11,21 @@ import solarPanelOrange from '../../assets/icons/solarPanel/solar-panel-circle-o
 import solarPanelYellow from '../../assets/icons/solarPanel/solar-panel-circle-yellow.svg'
 import solarPanelGreen from '../../assets/icons/solarPanel/solar-panel-circle-green.svg'
 
+import solarPanelRedSelected from '../../assets/icons/solarPanel/solar-panel-circle-red-hover.svg'
+import solarPanelOrangeSelected from '../../assets/icons/solarPanel/solar-panel-circle-orange-hover.svg'
+import solarPanelYellowSelected from '../../assets/icons/solarPanel/solar-panel-circle-yellow-hover.svg'
+import solarPanelGreenSelected from '../../assets/icons/solarPanel/solar-panel-circle-green-hover.svg'
+
 import windmillRed from '../../assets/icons/windmill/windmill-circle-red.svg'
 import windmillOrange from '../../assets/icons/windmill/windmill-circle-orange.svg'
 import windmillYellow from '../../assets/icons/windmill/windmill-circle-yellow.svg'
 import windmillGreen from '../../assets/icons/windmill/windmill-circle-green.svg'
+
+import windmillRedSelected from '../../assets/icons/windmill/windmill-circle-red-hover.svg'
+import windmillOrangeSelected from '../../assets/icons/windmill/windmill-circle-orange-hover.svg'
+import windmillYellowSelected from '../../assets/icons/windmill/windmill-circle-yellow-hover.svg'
+import windmillGreenSelected from '../../assets/icons/windmill/windmill-circle-green-hover.svg'
+
 import { IDataMock } from './dataMock';
 
 
@@ -46,6 +57,7 @@ const Map: React.FC<IProps> = ({
 	})
 
 	const [map, setMap] = React.useState<google.maps.Map | null>(null)
+	const [selectedMarker, setSelectedMarker] = React.useState<IDataMock | null>(null)
 
 	let marker: google.maps.Marker;
 
@@ -54,20 +66,20 @@ const Map: React.FC<IProps> = ({
 		lng: dataMock[0].position.lng,
 	};
 
-	const chooseMarkerIcon = (energyType: string, energyNeeded: number, energyMade: number) => {
+	const chooseMarkerIcon = (energyType: string, energyNeeded: number, energyMade: number, selected?: boolean) => {
 		const goalPrecentage = Math.round(energyMade / energyNeeded * 100);
 
 		if (goalPrecentage < 50) {
 
-			return energyType === 'windmill' ? windmillRed : solarPanelRed
+			return energyType === 'windmill' ? (!selected ? windmillRed : windmillRedSelected) : (!selected ? solarPanelRed : solarPanelRedSelected)
 		}
 		else if (goalPrecentage >= 50 && goalPrecentage < 75) {
-			return energyType === 'windmill' ? windmillOrange : solarPanelOrange
+			return energyType === 'windmill' ? (!selected ? windmillOrange : windmillOrangeSelected) : (!selected ? solarPanelOrange : solarPanelOrangeSelected)
 		}
 		else if (goalPrecentage >= 75 && goalPrecentage <= 99) {
-			return energyType === 'windmill' ? windmillYellow : solarPanelYellow
+			return energyType === 'windmill' ? (!selected ? windmillYellow : windmillYellowSelected) : (!selected ? solarPanelYellow : solarPanelYellowSelected)
 		} else {
-			return energyType === 'windmill' ? windmillGreen : solarPanelGreen
+			return energyType === 'windmill' ? (!selected ? windmillGreen : windmillGreenSelected) : (!selected ? solarPanelGreen : solarPanelGreenSelected)
 		}
 
 	}
@@ -87,6 +99,10 @@ const Map: React.FC<IProps> = ({
 
 			googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
 				setMarkerInfo(marker)
+				setSelectedMarker(marker)
+				console.log(selectedMarker === marker)
+				googleMarker.setIcon(chooseMarkerIcon(marker.energyType, marker.energyNeeded, marker.energyMade, true))
+				console.log('www')
 				handleResetAddMarkerInfo()
 			})
 		})
