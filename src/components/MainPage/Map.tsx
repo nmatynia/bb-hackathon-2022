@@ -1,10 +1,8 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { apiKey } from "../../apikey";
-import markerIcon from '../../assets/icons/map-pin.svg'
 
-// import windmillIcon from '../../assets/icons/windmill-circle.svg'
-// import solarPanelIcon from '../../assets/icons/solar-panel-circle.svg'
+import markerIcon from '../../assets/icons/map-pin.svg'
 
 import solarPanelRed from '../../assets/icons/solarPanel/solar-panel-circle-red.svg'
 import solarPanelOrange from '../../assets/icons/solarPanel/solar-panel-circle-orange.svg'
@@ -57,9 +55,9 @@ const Map: React.FC<IProps> = ({
 	})
 
 	const [map, setMap] = React.useState<google.maps.Map | null>(null)
-	const [selectedMarker, setSelectedMarker] = React.useState<IDataMock | null>(null)
 
 	let marker: google.maps.Marker;
+	let markers: Array<{ info: IDataMock, marker: google.maps.Marker }> = [];
 
 	const center = {
 		lat: dataMock[0].position.lat,
@@ -97,17 +95,21 @@ const Map: React.FC<IProps> = ({
 				icon: chooseMarkerIcon(marker.energyType, marker.energyNeeded, marker.energyMade)
 			});
 
-			googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
-				setMarkerInfo(marker)
-				setSelectedMarker(marker)
-				console.log(selectedMarker === marker)
-				googleMarker.setIcon(chooseMarkerIcon(marker.energyType, marker.energyNeeded, marker.energyMade, true))
-				console.log('www')
-				handleResetAddMarkerInfo()
-			})
+			markers.push({ marker: googleMarker, info: marker })
+
+			google.maps.event.addListener(googleMarker, 'click', ((googleMarker) => {
+				return () => {
+					setMarkerInfo(marker);
+					handleResetAddMarkerInfo();
+
+					//Changing icon's appearance based on selection
+					markers.forEach(m => (m.marker.setIcon(chooseMarkerIcon(m.info.energyType, m.info.energyNeeded, m.info.energyMade, false))));
+					googleMarker.setIcon(chooseMarkerIcon(marker.energyType, marker.energyNeeded, marker.energyMade, true));
+					//
+				}
+			})(googleMarker));
 		})
 		//
-
 	}, [])
 
 	//User can add new marker 
@@ -122,6 +124,11 @@ const Map: React.FC<IProps> = ({
 		googleMarker && googleMarker.addListener('click', (e: google.maps.MapMouseEvent) => {
 			setMarkerInfo(newlyAddedData)
 			handleResetAddMarkerInfo()
+
+			//Changing icon's appearance based on selection
+			markers.forEach(m => (m.marker.setIcon(chooseMarkerIcon(m.info.energyType, m.info.energyNeeded, m.info.energyMade, false))));
+			googleMarker.setIcon(chooseMarkerIcon(newlyAddedData.energyType, newlyAddedData.energyNeeded, newlyAddedData.energyMade, true));
+			//
 		})
 
 	}, [map, refreshMap])

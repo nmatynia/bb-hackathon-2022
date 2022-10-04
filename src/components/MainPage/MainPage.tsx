@@ -40,6 +40,7 @@ export const MainPage = () => {
 	}
 	const handleAddNewMarker = () => {
 		dataMock.push({
+			id: dataMock.length,
 			address: 'TODO - Temporary',
 			position: {
 				lat: pos!.lat,

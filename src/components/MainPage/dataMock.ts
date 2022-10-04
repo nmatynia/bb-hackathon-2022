@@ -1,4 +1,5 @@
 export interface IDataMock {
+	id: number,
 	address: string,
 	position: {
 		lat: number,
@@ -17,6 +18,7 @@ export interface IDataMock {
 
 export const dataMock: IDataMock[] = [
 	{
+		id: 1,
 		address: 'ul. Puławska',
 		position: {
 			lat: 52.21235305688391,
@@ -29,6 +31,7 @@ export const dataMock: IDataMock[] = [
 		energyPerHour: 1.6
 	},
 	{
+		id: 2,
 		address: 'al. Ludwika Waryńskiego',
 		position: {
 			lat: 52.211240063996044,
@@ -42,6 +45,7 @@ export const dataMock: IDataMock[] = [
 
 	},
 	{
+		id: 3,
 		address: 'ul. Goworka',
 		position: {
 			lat: 52.211246638111625,
@@ -54,10 +58,24 @@ export const dataMock: IDataMock[] = [
 		energyPerHour: 14000 // 2,000 * 7
 	},
 	{
+		id: 4,
 		address: 'ul. Klonowa',
 		position: {
 			lat: 52.21322980032158,
 			lng: 21.02230559682815
+		},
+		energyType: 'solarPanel',
+		quantity: 3,
+		energyNeeded: 800,
+		energyMade: 800,
+		energyPerHour: 0.96 // 0.32 * 3
+	},
+	{
+		id: 5,
+		address: 'Random',
+		position: {
+			lat: 30.21322980032158,
+			lng: 30.02230559682815
 		},
 		energyType: 'solarPanel',
 		quantity: 3,
